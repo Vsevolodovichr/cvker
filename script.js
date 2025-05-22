@@ -25,15 +25,41 @@ function setLang(lang) {
     });
 }
 
+const langToCountryCode = {
+    uk: "UA",
+    en: "US",
+    fr: "FR",
+    de: "DE",
+    es: "ES",
+    it: "IT",
+    pl: "PL",
+    cs: "CZ",
+    nl: "NL",
+    sv: "SE",
+    no: "NO",
+    fi: "FI",
+    zh: "CN",
+    ja: "JP",
+    ko: "KR",
+    tr: "TR",
+    pt: "PT",
+    ro: "RO",
+    
+};
+
 function updateLangButton(currentLang) {
     const langBtn = document.getElementById("lang-toggle");
-    langBtn.textContent = currentLang.toUpperCase();
+    const countryCode = langToCountryCode[currentLang] || currentLang.toUpperCase();
+
+    langBtn.textContent = countryCode;
+
     langBtn.onclick = () => {
-        const nextLang = currentLang === "uk" ? "en" : "uk";
+        const nextLang = currentLang === "uk" ? "en" : "uk";  // тут ти вирішуєш, які саме мови підтримувати
         setLang(nextLang);
         updateLangButton(nextLang);
     };
 }
+
 
 function detectLanguage() {
     let lang = navigator.language || navigator.userLanguage;
