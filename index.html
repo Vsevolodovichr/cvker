@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cvker — Генератор резюме</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>cvker</h1>
+        <div class="lang-switcher">
+            <button onclick="setLang('uk')">UA</button>
+            <button onclick="setLang('en')">EN</button>
+        </div>
+    </header>
+
+    <main>
+        <form id="cv-form">
+            <label data-lang-uk="Ім'я" data-lang-en="Name">Ім'я</label>
+            <input type="text" name="name" required>
+
+            <label data-lang-uk="Професія" data-lang-en="Job Title">Професія</label>
+            <input type="text" name="title" required>
+
+            <label data-lang-uk="Про себе" data-lang-en="About Me">Про себе</label>
+            <textarea name="about" rows="4" required></textarea>
+
+            <button type="button" onclick="generateCV()">Створити резюме</button>
+        </form>
+
+        <section id="cv-preview">
+            <div id="cv-template">
+                <h2 id="cv-name"></h2>
+                <h3 id="cv-title"></h3>
+                <p id="cv-about"></p>
+            </div>
+            <button onclick="downloadPDF()">⬇ Завантажити PDF</button>
+        </section>
+    </main>
+
+    <script src="html2pdf.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
