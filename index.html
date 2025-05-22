@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>cvker — Генератор резюме</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sakura.css/css/sakura-dark.css">
 </head>
 <body>
     <header>
@@ -17,15 +17,16 @@
     <main>
         <form id="cv-form">
             <label data-i18n="name_label">Ім’я</label>
-            <input type="text" id="name" placeholder="Іван Іванович">
+            <input type="text" id="name" placeholder="Іван Іванович" />
 
             <label data-i18n="email_label">Email</label>
-            <input type="email" id="email" placeholder="ivan@email.com">
+            <input type="email" id="email" placeholder="ivan@email.com" />
 
             <label data-i18n="summary_label">Коротко про себе</label>
             <textarea id="summary" rows="4" placeholder="Ваш професійний профіль..."></textarea>
 
             <button type="button" onclick="generateCV()" data-i18n="generate_btn">Згенерувати</button>
+            <button type="button" onclick="downloadPDF()">PDF</button>
         </form>
 
         <div id="cv-preview">
@@ -36,6 +37,7 @@
             </div>
         </div>
     </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
