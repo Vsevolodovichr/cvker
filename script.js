@@ -20,14 +20,17 @@ function updateLangButton(currentLang) {
     };
 }
 
-window.onload = detectLanguage;
-
 function setLang(lang) {
-    document.querySelectorAll('[data-lang-uk]').forEach(el => {
-        el.textContent = lang === 'uk' ? el.dataset.langUk : el.dataset.langEn;
+    const elements = document.querySelectorAll("[data-i18n]");
+    elements.forEach((el) => {
+        const key = el.getAttribute("data-i18n");
+        if (translations[lang] && translations[lang][key]) {
+            el.textContent = translations[lang][key];
+        }
     });
-    localStorage.setItem('lang', lang);
 }
+
+window.onload = detectLanguage;
 
 function generateCV() {
     const form = document.forms['cv-form'];
@@ -41,7 +44,4 @@ function downloadPDF() {
     html2pdf().from(element).save('cv.pdf');
 }
 
-window.onload = () => {
-    const savedLang = localStorage.getItem('lang') || 'uk';
-    setLang(savedLang);
-};
+
