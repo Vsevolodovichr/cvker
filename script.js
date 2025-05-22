@@ -11,6 +11,29 @@ function generateCV() {
     document.getElementById('cv-title').innerText = form.title.value;
     document.getElementById('cv-about').innerText = form.about.value;
 }
+function detectLanguage() {
+    let lang = navigator.language || navigator.userLanguage;
+
+    if (lang.startsWith("ru")) lang = "uk";
+    else if (lang.startsWith("uk")) lang = "uk";
+    else lang = "en";
+
+    setLang(lang);
+    updateLangButton(lang);
+}
+
+function updateLangButton(currentLang) {
+    const langBtn = document.getElementById("lang-toggle");
+    langBtn.textContent = currentLang.toUpperCase();
+
+    langBtn.onclick = () => {
+        const nextLang = currentLang === "uk" ? "en" : "uk";
+        setLang(nextLang);
+        updateLangButton(nextLang);
+    };
+}
+
+window.onload = detectLanguage;
 
 function downloadPDF() {
     const element = document.getElementById('cv-template');
