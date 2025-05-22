@@ -1,24 +1,19 @@
-function detectLanguage() {
-    let lang = navigator.language || navigator.userLanguage;
-
-    if (lang.startsWith("ru")) lang = "uk";
-    else if (lang.startsWith("uk")) lang = "uk";
-    else lang = "en";
-
-    setLang(lang);
-    updateLangButton(lang);
-}
-
-function updateLangButton(currentLang) {
-    const langBtn = document.getElementById("lang-toggle");
-    langBtn.textContent = currentLang.toUpperCase();
-
-    langBtn.onclick = () => {
-        const nextLang = currentLang === "uk" ? "en" : "uk";
-        setLang(nextLang);
-        updateLangButton(nextLang);
-    };
-}
+const translations = {
+    uk: {
+        title: "Генератор резюме",
+        name_label: "Ім’я",
+        email_label: "Email",
+        summary_label: "Коротко про себе",
+        generate_btn: "Згенерувати",
+    },
+    en: {
+        title: "Resume Generator",
+        name_label: "Name",
+        email_label: "Email",
+        summary_label: "Summary",
+        generate_btn: "Generate",
+    }
+};
 
 function setLang(lang) {
     const elements = document.querySelectorAll("[data-i18n]");
@@ -30,18 +25,30 @@ function setLang(lang) {
     });
 }
 
-window.onload = detectLanguage;
+function updateLangButton(currentLang) {
+    const langBtn = document.getElementById("lang-toggle");
+    langBtn.textContent = currentLang.toUpperCase();
+    langBtn.onclick = () => {
+        const nextLang = currentLang === "uk" ? "en" : "uk";
+        setLang(nextLang);
+        updateLangButton(nextLang);
+    };
+}
+
+function detectLanguage() {
+    let lang = navigator.language || navigator.userLanguage;
+    if (lang.startsWith("ru")) lang = "uk";
+    else if (lang.startsWith("uk")) lang = "uk";
+    else lang = "en";
+
+    setLang(lang);
+    updateLangButton(lang);
+}
 
 function generateCV() {
-    const form = document.forms['cv-form'];
-    document.getElementById('cv-name').innerText = form.name.value;
-    document.getElementById('cv-title').innerText = form.title.value;
-    document.getElementById('cv-about').innerText = form.about.value;
+    document.getElementById("preview-name").textContent = document.getElementById("name").value;
+    document.getElementById("preview-email").textContent = document.getElementById("email").value;
+    document.getElementById("preview-summary").textContent = document.getElementById("summary").value;
 }
 
-function downloadPDF() {
-    const element = document.getElementById('cv-template');
-    html2pdf().from(element).save('cv.pdf');
-}
-
-
+window.onload = detectLanguage;

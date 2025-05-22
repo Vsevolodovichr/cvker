@@ -4,43 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cvker — Генератор резюме</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>cvker</h1>
+        <h1 data-i18n="title">Генератор резюме</h1>
         <div class="lang-switcher">
-             <button id="lang-toggle" title="Змінити мову">🌐</button>
+            <button id="lang-toggle" title="Змінити мову">🌐</button>
         </div>
     </header>
-
     <main>
         <form id="cv-form">
-            <label data-lang-uk="Ім'я" data-lang-en="Name">Ім'я</label>
-            <input type="text" name="name" required>
+            <label data-i18n="name_label">Ім’я</label>
+            <input type="text" id="name" placeholder="Іван Іванович">
 
-            <label data-lang-uk="Професія" data-lang-en="Job Title">Професія</label>
-            <input type="text" name="title" required>
+            <label data-i18n="email_label">Email</label>
+            <input type="email" id="email" placeholder="ivan@email.com">
 
-            <label data-lang-uk="Про себе" data-lang-en="About Me">Про себе</label>
-            <textarea name="about" rows="4" required></textarea>
+            <label data-i18n="summary_label">Коротко про себе</label>
+            <textarea id="summary" rows="4" placeholder="Ваш професійний профіль..."></textarea>
 
-            <button type="button" onclick="generateCV()">Створити резюме</button>
+            <button type="button" onclick="generateCV()" data-i18n="generate_btn">Згенерувати</button>
         </form>
 
-        <section id="cv-preview">
+        <div id="cv-preview">
             <div id="cv-template">
-                <h2 id="cv-name"></h2>
-                <h3 id="cv-title"></h3>
-                <p id="cv-about"></p>
+                <h2 id="preview-name">Ім’я</h2>
+                <h3 id="preview-email">Email</h3>
+                <p id="preview-summary">Опис...</p>
             </div>
-            <button onclick="downloadPDF()">⬇ Завантажити PDF</button>
-        </section>
+        </div>
     </main>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
