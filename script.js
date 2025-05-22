@@ -1,57 +1,53 @@
-const translations = {
-    uk: {
-        title: "Генератор резюме",
-        name_label: "Ім’я",
-        email_label: "Email",
-        summary_label: "Коротко про себе",
-        generate_btn: "Згенерувати",
-    },
-    en: {
-        title: "Resume Generator",
-        name_label: "Name",
-        email_label: "Email",
-        summary_label: "Summary",
-        generate_btn: "Generate",
-    }
-};
+let translations = {};
+let currentLang = "en";
+
+function loadTranslation(lang) {
+    fetch(`locales/${lang}.json`)
+        .then((response) => {
+            if (!response.ok) throw new Error("Language file not found");
+            return response.json();
+        })
+        .then((data) => {
+            translations = data;
+            setLang(lang);
+        })
+        .catch(() => {
+            console.warn(`Missing translation for: ${lang}`);
+            if (lang !== "en") loadTranslation("en");
+        });
+}
 
 function setLang(lang) {
+    currentLang = lang;
     document.documentElement.lang = lang;
     const elements = document.querySelectorAll("[data-i18n]");
     elements.forEach((el) => {
         const key = el.getAttribute("data-i18n");
-        if (translations[lang] && translations[lang][key]) {
-            el.textContent = translations[lang][key];
+        if (translations[key]) {
+            el.textContent = translations[key];
         }
     });
+    updateLangButton(getCountryCode(lang));
 }
 
 function getCountryCode(langTag) {
     const parts = langTag.split("-");
     const region = parts[1];
     const lang = parts[0];
-    if (region) return region.toUpperCase();
-
     const fallback = {
         uk: "UA",
         en: "US",
-        fr: "FR",
-        de: "DE",
-        es: "ES",
-        it: "IT",
         ru: "UA",
     };
-    return fallback[lang] || lang.toUpperCase();
+    return region ? region.toUpperCase() : (fallback[lang] || lang.toUpperCase());
 }
 
-function updateLangButton(countryCode) {
+function updateLangButton(code) {
     const langBtn = document.getElementById("lang-toggle");
-    langBtn.textContent = countryCode;
+    langBtn.textContent = code;
     langBtn.onclick = () => {
-        const current = document.documentElement.lang;
-        const nextLang = current === "uk" ? "en" : "uk";
-        setLang(nextLang);
-        updateLangButton(getCountryCode(nextLang));
+        const nextLang = currentLang === "uk" ? "en" : "uk";
+        loadTranslation(nextLang);
     };
 }
 
@@ -59,10 +55,7 @@ function detectLanguage() {
     let lang = (navigator.language || "en").toLowerCase();
     if (lang.startsWith("ru")) lang = "uk";
     else if (!["uk", "en"].includes(lang.substring(0, 2))) lang = "en";
-
-    const shortLang = lang.substring(0, 2);
-    setLang(shortLang);
-    updateLangButton(getCountryCode(lang));
+    loadTranslation(lang.substring(0, 2));
 }
 
 function generateCV() {
