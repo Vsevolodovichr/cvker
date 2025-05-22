@@ -1,2 +1,2 @@
 # cvker
-Resume CV maker free and no whotermark forever
+Resume CV maker free and no watermark forever
